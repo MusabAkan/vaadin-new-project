@@ -157,13 +157,14 @@ public class MyUI extends UI {
         String phoneNumber = txtPhoneNumber.getValue();
         String fullName = txtFullName.getValue();
 
-        int count = phoneList.size() + 1;
+        Phone phoneVal = new Phone(phoneNumber, fullName);
 
-        if (selectItem == null) {
-            Phone phoneVal = new Phone( phoneNumber, fullName);
+        if (phoneList.equals(phoneVal)) {
+            clearField();
+        } else if (selectItem == null) {
             phoneList.add(phoneVal);
         } else {
-            Phone phoneVal = selectItem;
+            phoneVal = selectItem;
             phoneVal.setPhoneNumber(phoneNumber);
             phoneVal.setFullName(fullName);
         }
