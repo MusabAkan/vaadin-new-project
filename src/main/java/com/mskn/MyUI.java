@@ -156,11 +156,12 @@ public class MyUI extends UI {
 
         String phoneNumber = txtPhoneNumber.getValue();
         String fullName = txtFullName.getValue();
+        clearField();
 
         Phone phoneVal = new Phone(phoneNumber, fullName);
 
         if (phoneList.equals(phoneVal)) {
-            clearField();
+            return;
         } else if (selectItem == null) {
             phoneList.add(phoneVal);
         } else {
@@ -169,7 +170,6 @@ public class MyUI extends UI {
             phoneVal.setFullName(fullName);
         }
 
-        clearField();
     }
 
     private void buildDeleteButton() {
