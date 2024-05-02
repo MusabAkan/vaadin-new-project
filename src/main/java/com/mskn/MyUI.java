@@ -18,6 +18,8 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -34,7 +36,7 @@ public class MyUI extends UI {
     String fullNameStr = "fullName";
     String phoneNumberStr = "phoneNumber";
 
-    ArrayList<Phone> phoneList = new ArrayList<Phone>();
+    Set<Phone> phoneList = new HashSet<Phone>();
 
     VerticalLayout layout;
 
@@ -158,7 +160,7 @@ public class MyUI extends UI {
         int count = phoneList.size() + 1;
 
         if (selectItem == null) {
-            Phone phoneVal = new Phone(count, phoneNumber, fullName);
+            Phone phoneVal = new Phone( phoneNumber, fullName);
             phoneList.add(phoneVal);
         } else {
             Phone phoneVal = selectItem;
