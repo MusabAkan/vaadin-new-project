@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Phone {
 
-
     private String fullName;
     private String phoneNumber;
 
@@ -37,8 +36,7 @@ public class Phone {
         Phone phone = (Phone) o;
         return Objects.equals(fullName, phone.fullName) && Objects.equals(phoneNumber, phone.phoneNumber);
     }
-
-    @Override
+     @Override
     public int hashCode() {
         return Objects.hash(fullName, phoneNumber);
     }
