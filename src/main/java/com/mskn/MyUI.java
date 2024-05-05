@@ -2,25 +2,16 @@ package com.mskn;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.mskn.components.MusabDeleteButton;
-import com.mskn.components.MusabSaveButton;
-import com.mskn.components.MusabTextField;
-import com.mskn.components.MusabUI;
-import com.mskn.model.Phone;
+import com.mskn.components.SaveButton;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
-import com.vaadin.data.Container;
-import com.vaadin.data.util.filter.Like;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.server.Page;
+import com.vaadin.client.debug.internal.Icon;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -33,18 +24,61 @@ import java.util.Set;
 @Widgetset("com.mskn.MyAppWidgetset")
 public class MyUI extends UI {
 
+    String[] strings = new String[]{"İstanbul", "Ankara", "Rize", "Konya", "Sakarya", "İzmir", "Samsun"};
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
+        VerticalLayout layout = new VerticalLayout();
 
-      /*MusabUI ui = new MusabUI();
-        ui.buildContent();
-        setContent(ui.layout);
-       */
+        layout.setMargin(true);
+        setContent(layout);
 
-        //loadMain();
 
+        ComboBox cmbList = new ComboBox("Select an option");
+        cmbList.isNullSelectionAllowed();
+        for (String string : strings) {
+            cmbList.addItem(string);
+        }
+
+        layout.addComponent(cmbList);
+
+
+        SaveButton button = new SaveButton();
+
+
+
+        button.setDescription("Kardeş bak beni tıklama la :)");
+
+        button.addClickListener(clickEvent -> {
+            Object value = cmbList.getValue();
+
+            if (value == null) {
+                UserError componentError = new UserError("Lütfen boş geçmeyiniz!");
+                cmbList.setComponentError(componentError);
+            } else if (!IsWithContainsCity(value.toString())) {
+                UserError componentError = new UserError("Lütfen şehir seçiminizi yapınız!");
+                cmbList.setComponentError(componentError);
+            } else {
+                cmbList.setComponentError(null); // Temizlemek için yapılıyor
+                //button.setEnabled(false);
+            }
+        });
+
+        layout.addComponent(button);
+    }
+
+    private boolean IsWithContainsCity(String string) {
+        for (String str : strings) {
+            if (str.contains(string)) {
+                return true;
+            }
+        }
+        return false                ;
+    }
+
+
+    private void workPhrease() {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
         setContent(layout);
@@ -71,7 +105,6 @@ public class MyUI extends UI {
         });
 
         layout.addComponent(button);
-
     }
 
     public String getFunnyPhrase(String name1, String name2) {
